@@ -56,7 +56,7 @@ class optimize:
 		A_phase1 = np.hstack((self.A, np.eye(m)))
 		# m more variables
 		array = np.zeros(m + 1)
-		a = m + 1
+		a = n 
 		for i in range(len(array)):
 			if(i != 0):
 				array[i] = a
@@ -81,7 +81,7 @@ class optimize:
 	
 	def phase1tableauSolver(self):
 		pass
-		
+
 	def isOptimal(self):
 		for i in range(2,self.tableau.shape[1]):
 			if(self.tableau[0,i] < 0):
@@ -159,7 +159,7 @@ print(problem.b)
 print(problem.c)
 problem.tableau = np.array([[0,0,-10,-12,-12,0,0,0],[3,20,1,2,2,1,0,0],[4,20,2,1,2,0,1,0],[5,20,2,2,1,0,0,1]])
 print(problem.tableau)
-problem.phase2TableauSolver()
+problem.tableau_maker_phase1()
 print(problem.tableau)
 
 
