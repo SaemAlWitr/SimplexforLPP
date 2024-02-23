@@ -47,45 +47,47 @@ class optimize:
 
 	def createTableau(self):
 		pass
-	def tableau_maker_phase1(c, A, b):
-    		m, n = A.shape
-    		cost_array=np.full(n,-1)
-    		reduced_costs= cost_array @ A
-    		# Phase 1: Add artificial variables
-    		A_phase1 = np.hstack((A, np.eye(m)))
-    		# m more variables
-    		array=np.zeros(m+1)
-    		a=m+1
-    		for i in range(len(array)):
-        		if(i!=0):
-            			array[i]=a
-            			a+=1
-    		new_array=np.expand_dims(array, axis=1)
-    
-    		reduced_cost = np.hstack((reduced_costs, np.zeros(m)))
+	def tableau_maker_phase1(self):
+		m, n = self.A.shape
+		cost_array = np.full(m,-1)
+		print(cost_array)
+		reduced_costs = cost_array @ self.A
+		# Phase 1: Add artificial variables
+		A_phase1 = np.hstack((self.A, np.eye(m)))
+		# m more variables
+		array = np.zeros(m + 1)
+		a = m + 1
+		for i in range(len(array)):
+			if(i != 0):
+				array[i] = a
+				a += 1
+		new_array = np.expand_dims(array, axis = 1)
 
-    		sum=0
-    		for i in b:
-        		sum+=i
-    		cost=-sum
-    
-    		b_added = np.insert(b, 0, cost)
-    		b_reshaped = np.expand_dims(b_added, axis=1)
-    		tableau_with_costs=np.vstack((reduced_cost,A_phase1))
+		reduced_cost = np.hstack((reduced_costs, np.zeros(m)))
 
-    
-    		tableau_with_costs=np.hstack((b_reshaped, tableau_with_costs))
-    		tableau_with_costs=np.hstack((new_array,tableau_with_costs))
-    
-		return tableau_with_costs
+		sum=0
+		for i in b:
+			sum += i
+		cost =- sum
+
+		b_added = np.insert(self.b, 0, cost)
+		b_reshaped = np.expand_dims(b_added, axis=1)
+		tableau_with_costs = np.vstack((reduced_cost,A_phase1))
+
+
+		tableau_with_costs = np.hstack((b_reshaped, tableau_with_costs))
+		tableau_with_costs = np.hstack((new_array,tableau_with_costs))
+		self.tableau = tableau_with_costs
+	
+	def phase1tableauSolver(self):
+		pass
+		
 	def isOptimal(self):
 		for i in range(2,self.tableau.shape[1]):
 			if(self.tableau[0,i] < 0):
 				return False,i
 		self.status = "optimal" 
 		return True,0
-	def tableauSolver(self):
-		pass
 
 	def phase2TableauSolver(self):
 		#assuming Basis coulmn i.e. 0th in tableau is 0 indexed 
@@ -159,5 +161,11 @@ problem.tableau = np.array([[0,0,-10,-12,-12,0,0,0],[3,20,1,2,2,1,0,0],[4,20,2,1
 print(problem.tableau)
 problem.phase2TableauSolver()
 print(problem.tableau)
+
+
+
+
+
+
 
 
