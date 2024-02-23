@@ -68,28 +68,15 @@ class optimize:
 
 problem = optimize(0)
 c = [-10, -12, -12]
-
-# Define the constraints matrix
-A = np.array([
-    [1, 2,2],  # Coefficients of x1 and x2 in the first constraint
-    [2, 1, 2],[2,2, 1]   # Coefficients of x1 and x2 in the second constraint
-])
-
-# Define the right-hand side of constraints
+A = np.array([[1, 2,2], [2, 1, 2],[2,2, 1]])
 b = [20,20,20]
 
-# Define the constraint types (<=)
 constr = [1, 1, 1]
-
-# Create an instance of the optimize class
-
-# Set the attributes of the problem instance
 problem.A = A
 problem.b = b
 problem.c = c
 problem.constr = constr
 
-# Standardize the problem
 problem.standardize()
 print(problem.A)
 print(problem.b)
