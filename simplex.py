@@ -22,7 +22,6 @@ class optimize:
         num_constraints = len(self.constr)
         num_vars = len(self.A[0])
         A_slack = np.zeros((num_constraints, num_vars + num_constraints))
-        c_slack = np.zeros(num_vars + num_constraints)
 
         for i in range(num_constraints):
             if self.constr[i] == 1:
@@ -39,6 +38,7 @@ class optimize:
                 A_slack = np.delete(A_slack, i, 1)
             else:
                 i+=1
+        c_slack = np.zeros(A_slack.shape[1])
 
         c_slack[:num_vars] = self.c
         self.A = A_slack
@@ -180,11 +180,11 @@ class optimize:
 
 
 problem = optimize(1)
-c = [-10, -12, -12]
-A = np.array([[1, 2, 2], [2, 1, 2], [2, 2, 1]])
-b = [20, 20, 20]
+c = [1, 1, 1,1]
+A = np.array([[1, 2, 3,0], [-1, 2, 6, 0], [0 ,4 , 9,0],[0,0,3,1]])
+b = [3, 2, 5, 1]
 
-constr = [2, 2, 2]
+constr = [2, 2, 2,2]
 problem.A = A
 problem.b = b
 problem.c = c
@@ -194,8 +194,7 @@ problem.standardize()
 print(problem.A)
 print(problem.b)
 print(problem.c)
-problem.tableau = np.array(
-    [[0, 0, -10, -12, -12, 0, 0, 0], [3, 20, 1, 2, 2, 1, 0, 0], [4, 20, 2, 1, 2, 0, 1, 0], [5, 20, 2, 2, 1, 0, 0, 1]])
 print(problem.tableau)
 problem.tableau_maker_phase1()
+problem.createTableau()
 print(problem.tableau)
