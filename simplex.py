@@ -46,7 +46,39 @@ class optimize:
         
 
 	def createTableau(self):
-		pass
+		self.tableau.astype(float)
+		m = self.tableau.shape[0]-1
+		while(self.tableau[0][1] < 0):
+			#check feasible
+			opt,j = self.isOptimal()
+
+			c_j = self.tableau[0,j]
+			l =-1
+			ratio = 1e8
+			for i in range(1,m+1):
+				if(self.tableau[i,j]>0):
+					if(ratio > self.tableau[i,1]/self.tableau[i,j]):
+						ratio = self.tableau[i,1]/self.tableau[i,j]
+						l = i
+			if(l < 0):
+				return 1
+			pivot_ele = self.tableau[l,j]
+			#update basis index
+			self.tableau[l,0] = j - 2
+			# update lth row
+			self.tableau[l,1:] = 1/pivot_ele*self.tableau[l,1:]
+			#update rows except lth
+			for i in range(m+1):
+				if i==l: 
+					continue
+				self.tableau[i,1:] -= self.tableau[l,1:]*self.tableau[i,j]
+
+		if(self.tableau[0][1] > 0) :
+			self.status = "infeasible"
+
+		print("phase1")
+		print(self.tableau)
+		
 	def tableau_maker_phase1(self):
 		m, n = self.A.shape
 		cost_array = np.full(m,-1)
