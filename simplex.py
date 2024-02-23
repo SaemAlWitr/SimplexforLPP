@@ -58,8 +58,8 @@ class optimize:
     		a=m+1
     		for i in range(len(array)):
         		if(i!=0):
-            		array[i]=a
-            		a+=1
+            			array[i]=a
+            			a+=1
     		new_array=np.expand_dims(array, axis=1)
     
     		reduced_cost = np.hstack((reduced_costs, np.zeros(m)))
