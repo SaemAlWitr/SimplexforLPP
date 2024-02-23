@@ -84,6 +84,42 @@ class optimize:
         print("phase1")
         print(self.tableau)
 
+        # removing redundant rows
+        need_to_remove=[]
+        variable_until=len(self.tableau)-2
+        for i in range(1,len(self.tableau)):
+            if self.tableau[i][0]>3:
+                var=variable_until+1
+                count=0
+                for j in range(2,var+2):
+                    if(self.tableau[i][j]==0):
+                        count+=1
+                if (count==var):
+                    need_to_remove.append(self.tableau[i][0])
+        new_tableau=np.array(self.tableau[0])
+        
+        if(len(need_to_remove) > 0):
+            for i in range(1,len(self.tableau)):
+                if self.tableau[i][0] in need_to_remove:
+                    continue
+                else:
+                    new_tableau=np.vstack([new_tableau,self.tableau[i]])
+        self.tableau=new_tableau
+        variable_until=variable_until+2
+        new_tableau=np.array([])
+        for j in range(len(self.tableau[0])):
+            if(j<=variable_until):
+                new_tableau=np.append(new_tableau,self.tableau[0][j])
+        for i in range(1,len(self.tableau)):
+            new_array=np.array([])
+            for j in range(len(self.tableau[i])):
+                
+                if(j<=variable_until):
+                    new_array=np.append(new_array,self.tableau[i][j])
+                
+            new_tableau=np.vstack([new_tableau,new_array])
+        self.tableau=new_tableau
+
     def tableau_maker_phase1(self):
         m, n = self.A.shape
         cost_array = np.full(m, -1)
