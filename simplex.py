@@ -290,8 +290,8 @@ def simplex_algo():
 	file = open("input.txt",'r')
 	q = file.readlines()
 	problem = optimize(0)
-	if(q[1] == "minimize"):
-		priblem.obj = 1
+	if(q[1] == "minimize\n"):
+		problem.obj = 1
 	A = []
 	i = 4
 	while(q[i] != '\n'):
