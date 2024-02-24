@@ -339,4 +339,4 @@ def simplex_algo():
 # print(problem.solve())
 
 
-print(simplex_algo())
+# print(simplex_algo())
