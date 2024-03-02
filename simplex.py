@@ -267,7 +267,7 @@ class optimize:
 			self.phase2TableauSolver()
 			final_tableau = self.tableau[1:,1:].copy()
 			optimal_value = self.tableau[0,1]
-			d["optimal_value"] = optimal_value
+			
 			d["final_tableau"] = final_tableau
 			d["solution_status"] = self.status
 			
@@ -275,14 +275,17 @@ class optimize:
 				if(int(self.tableau[i,0]) < self.original_num_vars):
 					self.bfs[int(self.tableau[i,0])] = self.tableau[i,1]
 			d["optimal_solution"] = self.bfs
+			d["optimal_value"] = optimal_value
 
 			if(self.status == "unbounded"):
 				if(self.obj):
+					d["optimal_solution"] = "Does Not Exist"
 					d["optimal_value"] = -np.inf
-					d["optimal_solution"] = "Does Not Exist"
+					
 				else:
-					d["optimal_value"] = np.inf
 					d["optimal_solution"] = "Does Not Exist"
+					d["optimal_value"] = np.inf
+					
 				
 			else:
 				if(self.obj):
