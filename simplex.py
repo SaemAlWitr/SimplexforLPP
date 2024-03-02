@@ -279,8 +279,10 @@ class optimize:
 			if(self.status == "unbounded"):
 				if(self.obj):
 					d["optimal_value"] = -np.inf
+					d["optimal_solution"] = "Does Not Exist"
 				else:
 					d["optimal_value"] = np.inf
+					d["optimal_solution"] = "Does Not Exist"
 				
 			else:
 				if(self.obj):
