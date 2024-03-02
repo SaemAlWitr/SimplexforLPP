@@ -50,7 +50,7 @@ class optimize:
 
 		for i in range(num_constraints):
 		    if self.b[i] < 0:
-		        for j in range(num_vars):
+		        for j in range(self.A.shape[1]):
 		            self.A[i][j] = -self.A[i][j]
 		        self.b[i] = -self.b[i]
 		self.num_vars = self.c.shape[0]
