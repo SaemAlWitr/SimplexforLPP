@@ -58,7 +58,7 @@ class optimize:
 	def createTableau(self):
 		self.tableau.astype(float)
 		m = self.tableau.shape[0] - 1
-		while (self.tableau[0][1] < 0):
+		while (self.tableau[0][1] < -1e-6):
 			# check feasible
 			opt, j = self.isOptimal()
 			#added this condn below here @ वत्सल 
@@ -87,8 +87,8 @@ class optimize:
 			        continue
 			    self.tableau[i, 1:] -= self.tableau[l, 1:] * self.tableau[i, j]
 
-		if (self.tableau[0][1] != 0): #changed here @ वत्सल 
-		    self.status = "infeasible"
+		# if (self.tableau[0][1] != 0): #changed here @ वत्सल 
+		#     self.status = "infeasible"
         # removing redundant rows
         # need_to_remove=[]
         # variable_until=len(self.tableau)-2
@@ -260,8 +260,8 @@ class optimize:
 
 		if(self.status == "infeasible"):
 			d["solution_status"] = "infeasible"
-			d["optimal_solution"] = self.bfs
-			d["optimal_value"] = 0
+			d["optimal_solution"] = "Does Not Exist"
+			d["optimal_value"] = "Does Not Exist"
 		
 		else:
 			self.phase2TableauSolver()
@@ -276,14 +276,15 @@ class optimize:
 					self.bfs[int(self.tableau[i,0])] = self.tableau[i,1]
 			d["optimal_solution"] = self.bfs
 
-			# if(self.status == "unbounded"):
-			# 	if(self.obj):
-			# 		d["optimal_value"] = -np.inf
-			# 	else:
-			# 		d["optimal_value"] = np.inf
-			# else:
-			if(self.obj):
-				d["optimal_value"] *= -1 #in case of min we need to invert the sign 
+			if(self.status == "unbounded"):
+				if(self.obj):
+					d["optimal_value"] = -np.inf
+				else:
+					d["optimal_value"] = np.inf
+				
+			else:
+				if(self.obj):
+					d["optimal_value"] *= -1 #in case of min we need to invert the sign 
 		return d
 
 def simplex_algo():
